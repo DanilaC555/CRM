@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Клиенты</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/media.css">
+  <script defer src="./main.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__container flex">
+      <a class="header__logo logo" href="#">
+        <img class="logo__image" src="./img/logo.svg" alt="Логотип skb.">
+      </a>
+      <div id="autocomplete-results" class="autocomplete-results"></div>
+      <form class="header__form" id="header-form" action="#">
+        <input type="text" id="search-input" class="header__form-input input-placeholder" placeholder="Введите запрос" autocomplete="off">
+      </form>
+    </div>
+  </header>
+  <main class="main">
+    <section class="client">
+      <div class="container">
+        <h1 class="title client__title">Клиенты</h1>
+          <div class="container__wraper">
+          <!-- таблица -->
+          <table class="table">
+            <thead class="table__thead">
+              <tr class="table__tr">
+                <th id="sortID" class="table__th table__th--width-id text-grey sort-text-color" data-sort="id">
+                    ID
+                    <span id="sortIconIdBottom" class="sort-icon-bottom"></span>
+                    <span id="sortIconIdTop" class="sort-icon-top"></span>
+                  </th>
+                <th id="sortFIO" class="table__th table__th--width-fio text-grey" data-sort="name">
+                    Фамилия Имя Отчество
+                    <span id="sortIconFioBottom" class="sort-icon-bottom"></span>
+                    <span id="sortIconFioTop" class="sort-icon-top"></span>
+                    <span class="sort-text sort-text-color">A-Я</span>
+                </th>
+                <th id="sortDateStart" class="table__th table__th--width-date-start text-grey" data-sort="created">
+                    Дата и время создания
+                    <span id="sortIconDateStartBottom" class="sort-icon-bottom"></span>
+                    <span id="sortIconDateStartTop" class="sort-icon-top"></span>
+                </th>
+                <th id="sortDateLast" class="table__th table__th--width-date-time-last text-grey" data-sort="updated">
+                    Последние изменения
+                    <span id="sortIconDateLastBottom" class="sort-icon-bottom"></span>
+                    <span id="sortIconDateLastTop" class="sort-icon-top"></span>
+                </th>
+                <th class="table__th table__th--width-contacts text-grey" data-sort="contacts">
+                  Контакты
+                </th>
+                <th class="table__th table__th--width-action text-grey" data-sort="actions">
+                  Действия
+                </th>
+              </tr>
+            </thead>
+            <tbody id="clientTableBody"></tbody>
+          </table>
+        </div>
+        <!-- добавить клиента -->
+        <div id="modal" class="modules modules--open">
+          <div class="modules__content">
+            <h2 class="title modules__title">
+              Новый клиент
+              <span class="modules__close">&times;</span>
+            </h2>
+            <form id="addClient" class="modules__form-add-client" action="#">
+              <div class="modules__form-block-input flex">
+                <div class="modules__form-group modules__form-group-bottom-style">
+                  <input type="text" id="clientSurnameInput" placeholder="Фамилия" class="input-placeholder modules__form-input">
+                </div>
+                <div class="modules__form-group modules__form-group-bottom-style">
+                  <input type="text" id="clientNameInput" placeholder="Имя" class="input-placeholder modules__form-input">
+                </div>
+                <div class="modules__form-group modules__form-group-bottom-style">
+                  <input type="text" id="clientLastNameInput" placeholder="Отчество" class="input-placeholder modules__form-input">
+                </div>
+              </div>
+              <div class="modules__form-group modules__form-group-content-contacts flex">
+                <!-- добавление коткакта -->
+                <div id="contactsContainer" class="modules__contact-container flex"></div>
+                  <button type="button" id="addContact" class="btn-reset modules__form-button-add-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <g clip-path="url(#clip0_121_884)">
+                        <path d="M8.00001 4.66659C7.63334 4.66659 7.33334 4.96659 7.33334 5.33325V7.33325H5.33334C4.96668 7.33325 4.66668 7.63325 4.66668 7.99992C4.66668 8.36659 4.96668 8.66659 5.33334 8.66659H7.33334V10.6666C7.33334 11.0333 7.63334 11.3333 8.00001 11.3333C8.36668 11.3333 8.66668 11.0333 8.66668 10.6666V8.66659H10.6667C11.0333 8.66659 11.3333 8.36659 11.3333 7.99992C11.3333 7.63325 11.0333 7.33325 10.6667 7.33325H8.66668V5.33325C8.66668 4.96659 8.36668 4.66659 8.00001 4.66659ZM8.00001 1.33325C4.32001 1.33325 1.33334 4.31992 1.33334 7.99992C1.33334 11.6799 4.32001 14.6666 8.00001 14.6666C11.68 14.6666 14.6667 11.6799 14.6667 7.99992C14.6667 4.31992 11.68 1.33325 8.00001 1.33325ZM8.00001 13.3333C5.06001 13.3333 2.66668 10.9399 2.66668 7.99992C2.66668 5.05992 5.06001 2.66659 8.00001 2.66659C10.94 2.66659 13.3333 5.05992 13.3333 7.99992C13.3333 10.9399 10.94 13.3333 8.00001 13.3333Z" fill="#9873FF"/>
+                      </g>
+                    </svg>
+                    Добавить контакт
+                  </button>
+              </div>
+              <div class="modules__form-group-btn-save-cansel flex">
+                <button type="submit" class="btn-reset modules__form-button-save-contact">
+                  сохранить
+                </button>
+                <button id="cancelButton" type="submit" class="btn-reset modules__form-button-cansel">
+                  Отмена
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="container__btn-add">
+          <button id="openModalButton" class="btn-reset container__btn-add-contacts container__btn-add-contacts--open">
+            <svg class="svg-add-client" xmlns="http://www.w3.org/2000/svg" width="23" height="16" viewBox="0 0 23 16">
+              <path d="M14.5 8C16.71 8 18.5 6.21 18.5 4C18.5 1.79 16.71 0 14.5 0C12.29 0 10.5 1.79 10.5 4C10.5 6.21 12.29 8 14.5 8ZM5.5 6V3H3.5V6H0.5V8H3.5V11H5.5V8H8.5V6H5.5ZM14.5 10C11.83 10 6.5 11.34 6.5 14V16H22.5V14C22.5 11.34 17.17 10 14.5 10Z"/>
+              </svg>
+            Добавить клиента
+          </button>
+        </div>
+        <!-- изменение клиента -->
+        <div id="modalChange" class="modules">
+          <div class="modules__content">
+            <h2 class="title modules__title">
+              Изменить данные
+              <span class="modules__close-сhange">&times;</span>
+              <span id="formChangeID"></span>
+            </h2>
+            <form id="addClientChange" class="modules__form-add-client" action="#">
+              <div class="modules__form-block-input flex">
+                <div class="modules__form-group modules__form-group-bottom-style-change">
+                  <label class="modules__form-change-label" for="clientSurnameInputChange">Фамилия</label>
+                  <input type="text" id="clientSurnameInputChange" placeholder="Фамилия" class="input-placeholder-change modules__form-input">
+                </div>
+                <div class="modules__form-group modules__form-group-bottom-style-change">
+                  <label class="modules__form-change-label" for="clientNameInputChange">Имя</label>
+                  <input type="text" id="clientNameInputChange" placeholder="Имя" class="input-placeholder-change modules__form-input">
+                </div>
+                <div class="modules__form-group modules__form-group-bottom-style-change">
+                  <label class="modules__form-change-label" for="clientLastNameInputChange">Отчество</label>
+                  <input type="text" id="clientLastNameInputChange" placeholder="Отчество" class="input-placeholder-change modules__form-input">
+                </div>
+              </div>
+              <div class="modules__form-group modules__form-group-content-contacts flex">
+                <!-- добавление коткакта -->
+                <div id="contactsContainerChange" class="modules__contact-container flex"></div>
+                  <button type="button" id="addContactChange" class="btn-reset modules__form-button-add-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <g clip-path="url(#clip0_124_2)">
+                        <path d="M7.99998 4.66683C7.63331 4.66683 7.33331 4.96683 7.33331 5.3335V7.3335H5.33331C4.96665 7.3335 4.66665 7.6335 4.66665 8.00016C4.66665 8.36683 4.96665 8.66683 5.33331 8.66683H7.33331V10.6668C7.33331 11.0335 7.63331 11.3335 7.99998 11.3335C8.36665 11.3335 8.66665 11.0335 8.66665 10.6668V8.66683H10.6666C11.0333 8.66683 11.3333 8.36683 11.3333 8.00016C11.3333 7.6335 11.0333 7.3335 10.6666 7.3335H8.66665V5.3335C8.66665 4.96683 8.36665 4.66683 7.99998 4.66683ZM7.99998 1.3335C4.31998 1.3335 1.33331 4.32016 1.33331 8.00016C1.33331 11.6802 4.31998 14.6668 7.99998 14.6668C11.68 14.6668 14.6666 11.6802 14.6666 8.00016C14.6666 4.32016 11.68 1.3335 7.99998 1.3335ZM7.99998 13.3335C5.05998 13.3335 2.66665 10.9402 2.66665 8.00016C2.66665 5.06016 5.05998 2.66683 7.99998 2.66683C10.94 2.66683 13.3333 5.06016 13.3333 8.00016C13.3333 10.9402 10.94 13.3335 7.99998 13.3335Z"/>
+                      </g>
+                      <defs>
+                      </defs>
+                    </svg>
+                    Добавить контакт
+                  </button>
+              </div>
+              <div class="modules__form-group-btn-save-cansel flex">
+                <button type="submit" class="btn-reset modules__form-button-save-contact">
+                  сохранить
+                </button>
+                <button id="cancelButtonChange" type="submit" class="btn-reset modules__form-button-cansel">
+                  Удалить клиента
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- удалить -->
+        <div id="modalDelete" class="modules">
+          <div class="modules__content">
+            <h2 class="title modules__title">
+              Удалить клиента
+              <span class="modules__close-delete">&times;</span>
+            </h2>
+            <div class="modules__delete-text-block">
+              <p class="modules__delete-text text-standart flex">
+                  Вы действительно хотите удалить данного клиента?
+              </p>
+            </div>
+            <div class="modules__form-group-btn-delite-cansel">
+              <button id="deleteContact" class="btn-reset modules__form-button-delete-contact">
+                Удалить
+              </button>
+              <button id="cancelButtonDelete" type="submit" class="btn-reset modules__form-button-cansel">
+                Отмена
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Индикатор загрузки со списком клиентов -->
+      <div id="loading-overlay" class="overlay loading-overlay">
+        <div class="spinner"></div>
+      </div>
+      <!-- Индикатор загрузки с редактированием -->
+      <div id="loadingOverlayChange" class="overlay loading-overlay-Change">
+        <div class="spinner"></div>
+      </div>
+      <!-- Индикатор загрузки с отправка формы -->
+      <div id="loadingOverlayAddForm" class="overlay loading-overlay-Add-form">
+        <div class="spinner"></div>
+      </div>
+      <!-- Индикатор загрузки с редактированием при отправке -->
+      <div id="loadingOverlayAddFormChange" class="overlay loading-overlay-Add-form-change">
+        <div class="spinner"></div>
+      </div>
+      <!-- Индикатор загрузки с удалением при отправке -->
+      <div id="loadingOverlayFormDelete" class="overlay loading-overlay-Add-form-delete">
+        <div class="spinner"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script defer src="./client.js"></script>
+</head>
+  <body class="client__page-body">
+    <div class="container container__page-clients flex" id="clientCard">
+      <h2 class="client__title client__page-title modules__title">Пользователь</h2>
+      <ul class="list-reset client__page-list">
+        <li class="client__page-text text-standart" id="clientName"></li>
+        <li class="client__page-text text-standart" id="clientSurname"></li>
+        <li class="client__page-text text-standart" id="clientLastName"></li>
+        <li class="client__page-text text-standart">
+          <h2 class="client__title client__page-title-list">Контакты</h2>
+          <div class="client__page-contact-content" id="clientContacts"></div>
+        </li>
+        <li class="client__page-text text-standart">
+          <a class="btn-reset client__page-link" id="editClientButton" href="#">Редактировать</a>
+          <!--               <a class="btn-reset client__page-link" id="editClientButton" href="index.html?id=CLIENT_ID">Редактировать</a> -->
+          <a class="btn-reset client__page-link" id="backButton" href="index.html">Назад к списку</a>
+        </li>
+      </ul>
+      <!-- изменение клиента -->
+      <div id="modalChange" class="modules">
+        <div class="modules__content">
+          <h2 class="title modules__title">
+            Изменить данные
+            <span class="modules__close-сhange">&times;</span>
+            <span id="formChangeID"></span>
+          </h2>
+          <form id="addClientChange" class="modules__form-add-client" action="#">
+            <div class="modules__form-block-input flex">
+              <div class="modules__form-group modules__form-group-bottom-style-change">
+                <label class="modules__form-change-label" for="clientSurnameInputChange">Фамилия</label>
+                <input type="text" id="clientSurnameInputChange" placeholder="Фамилия" class="input-placeholder-change modules__form-input">
+              </div>
+              <div class="modules__form-group modules__form-group-bottom-style-change">
+                <label class="modules__form-change-label" for="clientNameInputChange">Имя</label>
+                <input type="text" id="clientNameInputChange" placeholder="Имя" class="input-placeholder-change modules__form-input">
+              </div>
+              <div class="modules__form-group modules__form-group-bottom-style-change">
+                <label class="modules__form-change-label" for="clientLastNameInputChange">Отчество</label>
+                <input type="text" id="clientLastNameInputChange" placeholder="Отчество" class="input-placeholder-change modules__form-input">
+              </div>
+            </div>
+            <div class="modules__form-group modules__form-group-content-contacts flex">
+              <!-- добавление коткакта -->
+              <div id="contactsContainerChange" class="modules__contact-container flex"></div>
+                <button type="button" id="addContactChange" class="btn-reset modules__form-button-add-contact">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <g clip-path="url(#clip0_121_884)">
+                      <path d="M8.00001 4.66659C7.63334 4.66659 7.33334 4.96659 7.33334 5.33325V7.33325H5.33334C4.96668 7.33325 4.66668 7.63325 4.66668 7.99992C4.66668 8.36659 4.96668 8.66659 5.33334 8.66659H7.33334V10.6666C7.33334 11.0333 7.63334 11.3333 8.00001 11.3333C8.36668 11.3333 8.66668 11.0333 8.66668 10.6666V8.66659H10.6667C11.0333 8.66659 11.3333 8.36659 11.3333 7.99992C11.3333 7.63325 11.0333 7.33325 10.6667 7.33325H8.66668V5.33325C8.66668 4.96659 8.36668 4.66659 8.00001 4.66659ZM8.00001 1.33325C4.32001 1.33325 1.33334 4.31992 1.33334 7.99992C1.33334 11.6799 4.32001 14.6666 8.00001 14.6666C11.68 14.6666 14.6667 11.6799 14.6667 7.99992C14.6667 4.31992 11.68 1.33325 8.00001 1.33325ZM8.00001 13.3333C5.06001 13.3333 2.66668 10.9399 2.66668 7.99992C2.66668 5.05992 5.06001 2.66659 8.00001 2.66659C10.94 2.66659 13.3333 5.05992 13.3333 7.99992C13.3333 10.9399 10.94 13.3333 8.00001 13.3333Z" fill="#9873FF"/>
+                    </g>
+                  </svg>
+                  Добавить контакт
+                </button>
+            </div>
+            <div class="modules__form-group-btn-save-cansel flex">
+              <button type="submit" class="btn-reset modules__form-button-save-contact">
+                сохранить
+              </button>
+              <button id="cancelButtonChange" type="submit" class="btn-reset modules__form-button-cansel">
+                Удалить клиента
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- удалить -->
+      <div id="modalDelete" class="modules">
+        <div class="modules__content">
+          <h2 class="title modules__title">
+            Удалить клиента
+            <span class="modules__close-delete">&times;</span>
+          </h2>
+          <div class="modules__delete-text-block">
+            <p class="modules__delete-text text-standart flex">
+                Вы действительно хотите удалить данного клиента?
+            </p>
+          </div>
+          <div class="modules__form-group-btn-delite-cansel">
+            <button id="deleteContact" class="btn-reset modules__form-button-delete-contact">
+              Удалить
+            </button>
+            <button id="cancelButtonDelete" type="submit" class="btn-reset modules__form-button-cansel">
+              Отмена
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Индикатор загрузки со списком клиентов -->
+    <div id="loading-overlay" class="overlay loading-overlay">
+      <div class="spinner"></div>
+    </div>
+    <!-- Индикатор загрузки с редактированием -->
+    <div id="loadingOverlayChange" class="overlay loading-overlay-Change">
+      <div class="spinner"></div>
+    </div>
+    <!-- Индикатор загрузки с отправка формы -->
+    <div id="loadingOverlayAddForm" class="overlay loading-overlay-Add-form">
+      <div class="spinner"></div>
+    </div>
+    <!-- Индикатор загрузки с редактированием при отправке -->
+    <div id="loadingOverlayAddFormChange" class="overlay loading-overlay-Add-form-change">
+      <div class="spinner"></div>
+    </div>
+    <!-- Индикатор загрузки с удалением при отправке -->
+    <div id="loadingOverlayFormDelete" class="overlay loading-overlay-Add-form-delete">
+      <div class="spinner"></div>
+    </div>
+</body>
+</html>
